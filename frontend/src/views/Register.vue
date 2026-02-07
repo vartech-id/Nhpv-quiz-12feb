@@ -45,20 +45,45 @@ onMounted(() => {
 });
 </script>
 
-
 <template>
-  <div>
-    <h1>Register Players</h1>
-    <form @submit.prevent="handleSubmit">
-      <div>
-        <label for="maleName">Male Name:</label>
+  <div id="register-page">
+    <form class="register form" @submit.prevent="handleSubmit">
+      <div class="male form">
+        <label for="maleName">Nama Pasangan Pria:</label>
         <input id="maleName" v-model="maleName" type="text" required />
       </div>
-      <div>
-        <label for="femaleName">Female Name:</label>
+      <div class="female form">
+        <label for="femaleName">Nama Pasangan Wanita:</label>
         <input id="femaleName" v-model="femaleName" type="text" required />
       </div>
-      <button type="submit">Submit</button>
+      <button class="btn" type="submit">REGISTER</button>
     </form>
   </div>
 </template>
+<style>
+#register-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 3rem;
+  width: 100%;
+  background-color: aquamarine;
+  gap: 2rem;
+}
+
+input {
+  text-align: center;
+  width: 100%;
+  font-size: 3rem;
+}
+</style>

@@ -29,24 +29,22 @@ def _seed_questions_if_empty(db: Session) -> None:
 
     # Format: (question_text, option_a, option_b, correct_answer)
     male_seed = [
-        ('"Aku Kangen" Artinya...', "Dia pura-pura aja", "Dia beneran kangen dan ingin dimanja sama kamu", "B"),
-        ('"Tidur Yuk!" Artinya...', "Dia sebenernya bosen ngobrol dan pengen aktivitas lain", "Dia ngajak tidur beneran", "A"),
-        ('"Gapapa kok aman aja" Artinya...', "Dia lagi capek / stress", "Dia beneran gak kenapa-kenapa", "A"),
-        ('"Terserah" Artinya...', "Dia santai dan setuju apa aja", "Dia kecewa tapi males debat", "B"),
-        ('"Bebas" Artinya...', "Dia ngasih kamu ruang buat milih", "Dia berharap kamu peka dan milih yang dia mau", "B"),
-        ('"Aku lagi males" Artinya...', "Dia cuma lelah", "Dia butuh ditemenin tapi gak enak bilang", "B"),
-        ('"Yaudah" Artinya...', "Dia menerima dengan ikhlas", "Dia kesel tapi menahan diri", "B"),
+        ('"Terserah" Artinya...', "Dia Beneran Gatau Maunya apa?", "Kamu Harus Inisiatif", "B"),
+        ('"Have fun ya." Artinya...', "Dia Beneran have fun sama teman kamu", "Kamu gak boleh have fun dengan temenmu dan harus have fun dengan dia", "B"),
+        ('"Yaudah" Artinya...', "Dia merasa kecewa karena masalahnya tidak selesai dengan baik", "Dia beneran merasa masalahnya selesai", "A"),
+        ('"Gpp" Artinya...', "Dia Beneran Gak kenapa-kenapa", "Dia sedang sedih / marah sama kamu", "B"),
+        ('"Laper nih" Artinya...', "Kamu harus pesen makanan buat dia", "Dia mengeluh lapar aja", "A"),
     ]
 
+
     female_seed = [
+        ('"Maaf ya" Artinya...', "Dia Gak Bakal ngelakuin kesalahan yang sama", "Dia Bakal ngelakuin kesalahan yang sama", "B"),
+        ('"Iyaaaaaa" Artinya...', "Dia sedang excited banget sama kamu", "Dia gak excited sama kamu", "B"),
         ('"Aku Kangen" Artinya...', "Dia pura-pura aja", "Dia beneran kangen dan ingin dimanja sama kamu", "B"),
-        ('"Tidur Yuk!" Artinya...', "Dia sebenernya bosen ngobrol dan pengen aktivitas lain", "Dia ngajak tidur beneran", "A"),
+        ('"Tidur Yuk" Artinya...', "Dia sebenernya bosen ngobrol sama kamu dan ingin ngelakuin aktivitas lain sama teman / sendiri dan gak mau diganggu kamu", "Dia ngajak tidur beneran", "A"),
         ('"Gapapa kok aman aja" Artinya...', "Dia lagi capek / stress", "Dia beneran gak kenapa-kenapa", "A"),
-        ('"Terserah" Artinya...', "Dia santai dan setuju apa aja", "Dia kecewa tapi males debat", "B"),
-        ('"Bebas" Artinya...', "Dia ngasih kamu ruang buat milih", "Dia berharap kamu peka dan milih yang dia mau", "B"),
-        ('"Aku lagi males" Artinya...', "Dia cuma lelah", "Dia butuh ditemenin tapi gak enak bilang", "B"),
-        ('"Yaudah" Artinya...', "Dia menerima dengan ikhlas", "Dia kesel tapi menahan diri", "B"),
     ]
+
 
     # Insert male
     for qtext, a, b, correct in male_seed:

@@ -20,4 +20,26 @@ const route = useRoute();
 .fade-leave-to {
   opacity: 0;
 }
+
+.btn {
+  color: #dddc25;
+  background-color: white;
+  width: 30%;
+  font-size: 2.5rem;
+  border: none;
+  border-radius: 1.6rem;
+  padding: 0.5rem;
+  background-image: linear-gradient(to top, #244f53, #3b878f);
+}
+
+.next-btn {
+  color: #dddc25;
+  background-color: white;
+  width: 25%;
+  font-size: 2.8rem;
+  border: none;
+  border-radius: 1.6rem;
+  padding: 0.5rem;
+  background-image: linear-gradient(to top, #244f53, #3b878f);
+}
 </style>

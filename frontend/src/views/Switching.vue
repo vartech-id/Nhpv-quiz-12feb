@@ -11,7 +11,9 @@ const handleNext = () => {
 <template>
   <div>
     <h1>Switch Players</h1>
-    <p>Please switch with your partner now.</p>
+    <p>SAATNYA MEMBALAS</p>
+    <p>PASANGAN WANITA</p>
+    <p>SEKARANG GILIRANMU!</p>
     <button @click="handleNext">Next</button>
   </div>
 </template>

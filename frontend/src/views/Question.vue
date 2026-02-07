@@ -23,6 +23,19 @@ const idx = computed(() => no.value - 1);
 
 const sessionId = localStorage.getItem("sessionId");
 const currentQuestion = computed(() => questions.value[idx.value] || null);
+const correctSfx = new Audio("/correct.mp3");
+const wrongSfx = new Audio("/wrong.mp3");
+
+correctSfx.preload = "auto";
+wrongSfx.preload = "auto";
+
+function playAnswerSfx(correct) {
+  const sfx = correct ? correctSfx : wrongSfx;
+  sfx.currentTime = 0;
+  sfx.play().catch(() => {
+    // ignore autoplay-block errors
+  });
+}
 
 function resetQuestionUI() {
   pendingChoice.value = "";
@@ -101,6 +114,7 @@ function confirmYes() {
   isLocked.value = true;
   showFeedback.value = true;
   isCorrect.value = answer.value === currentQuestion.value.correct_answer;
+  playAnswerSfx(isCorrect.value);
 }
 
 function buttonClass(choice) {
@@ -190,95 +204,201 @@ watch([player, no], () => {
 </script>
 
 <template>
-  <div v-if="currentQuestion">
-    <h1>Question {{ no }}/5</h1>
-    <p>{{ currentQuestion.question_text }}</p>
+  <div id="quiz-page">
+    <div class="quiz-dom" v-if="currentQuestion">
+      <!-- <h1>Question {{ no }}/5</h1> -->
+      <h1 class="questions">{{ currentQuestion.question_text }}</h1>
+      <div class="option-wrapper">
+        <!-- Opsi A -->
+        <div class="option-a selections">
+          <button
+            class="row"
+            :class="buttonClass('A')"
+            @click="requestSelect('A')"
+            :disabled="isLocked"
+          >
+            <h1 class="tag-option">A.</h1>
+            <span>{{ currentQuestion.option_a }}</span>
+          </button>
+          <!-- icon slot selalu ada -->
+          <div class="iconSlot" :class="{ show: iconVisibleFor('A') }">
+            <!-- sementara text, nanti ganti ke img -->
+            <span class="iconText">{{ iconText() }}</span>
+          </div>
+        </div>
 
-    <!-- Opsi A -->
-    <div class="row">
-      <button
-        class="btn"
-        :class="buttonClass('A')"
-        @click="requestSelect('A')"
-        :disabled="isLocked"
-      >
-        <span>{{ currentQuestion.option_a }}</span>
-      </button>
+        <div class="option-b selections">
+          <button
+            class="row"
+            :class="buttonClass('B')"
+            @click="requestSelect('B')"
+            :disabled="isLocked"
+          >
+            <h1 class="tag-option">B.</h1>
+            <span>{{ currentQuestion.option_b }}</span>
+          </button>
+          <!-- icon slot selalu ada -->
+          <div class="iconSlot" :class="{ show: iconVisibleFor('B') }">
+            <!-- sementara text, nanti ganti ke img -->
+            <span class="iconText">{{ iconText() }}</span>
+          </div>
+        </div>
 
-      <!-- icon slot selalu ada -->
-      <div class="iconSlot" :class="{ show: iconVisibleFor('A') }">
-        <!-- sementara text, nanti ganti ke img -->
-        <span class="iconText">{{ iconText() }}</span>
+        <!-- Opsi B
+        <div class="row">
+          <h1 class="tag-option">B.</h1>
+          <button
+            :class="buttonClass('B')"
+            @click="requestSelect('B')"
+            :disabled="isLocked"
+          >
+            <span>{{ currentQuestion.option_b }}</span>
+          </button>
+
+          <div class="iconSlot" :class="{ show: iconVisibleFor('B') }">
+            <span class="iconText">{{ iconText() }}</span>
+          </div>
+        </div> -->
+      </div>
+
+      <button class="next-btn" @click="handleNext">Next</button>
+
+      <!-- Confirm modal -->
+      <div v-if="showConfirm" class="modalOverlay">
+        <div class="modalBox">
+          <p>Anda yakin pilih {{ pendingChoice }}?</p>
+          <button @click="confirmYes">Yes</button>
+          <button @click="confirmNo">No</button>
+        </div>
       </div>
     </div>
 
-    <!-- Opsi B -->
-    <div class="row">
-      <button
-        class="btn"
-        :class="buttonClass('B')"
-        @click="requestSelect('B')"
-        :disabled="isLocked"
-      >
-        <span>{{ currentQuestion.option_b }}</span>
-      </button>
-
-      <div class="iconSlot" :class="{ show: iconVisibleFor('B') }">
-        <span class="iconText">{{ iconText() }}</span>
-      </div>
-    </div>
-
-    <button @click="handleNext">Next</button>
-
-    <!-- Confirm modal -->
-    <div v-if="showConfirm" class="modalOverlay">
-      <div class="modalBox">
-        <p>Anda yakin pilih {{ pendingChoice }}?</p>
-        <button @click="confirmYes">Yes</button>
-        <button @click="confirmNo">No</button>
-      </div>
-    </div>
+    <div v-else>Loading...</div>
   </div>
-
-  <div v-else>Loading...</div>
 </template>
 
-<style scoped>
-/* row layout: button + icon di kanan */
-.row {
+<style>
+#quiz-page {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  gap: 10px;
-  margin: 10px 0;
+  width: 100%;
+  background-color: rgb(125, 125, 255);
 }
 
-.btn {
-  flex: 1;
-  border: 2px solid transparent;
-  padding: 12px 14px;
+.quiz-dom {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-color: rgb(220, 255, 125);
+  gap: 1.5rem;
+}
+
+.questions {
+  font-size: 3.4rem;
+  text-align: center;
+}
+
+.option-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: aqua;
+  width: 100%;
+  background-color: 10px solid blue;
+  gap: 2rem;
+}
+
+.selections {
+  display: flex;
+  background-color: rgb(255, 255, 255);
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  margin-left: 2rem;
+}
+
+.row {
+  display: flex;
+  width: 100%;
+  gap: 1rem;
+  background-color: rgb(139, 139, 139);
+  min-height: 110px;
+  border-radius: 40px;
+  padding-left: 0;
+  border: none;
+
+  align-items: stretch;
+}
+
+span {
   text-align: left;
+  border: 2px solid yellow;
+}
+
+.row span {
+  font-size: 2.2rem;
+  line-height: 1.1;
+  white-space: normal;
+  min-width: 0;
+  flex: 1;
+
+  /* center vertikal */
+  display: flex;
+  align-items: center;   /* ✅ bikin teks di tengah vertikal */
+  
+  /* biar ada jarak kanan */
+  padding-right: 16px;
+}
+
+.row > button {
+  font-size: 1rem;
+  width: 100%;
+  text-align: left;
+  border: none;
+}
+
+.tag-option {
+  background-color: aliceblue;
+  padding: 0; /* biar centernya akurat */
+  min-width: 120px; /* optional: biar lebar badge konsisten */
+  min-height: 110px; /* sama seperti .row */
+  border-radius: 40px 40px 40px 40px;
+
+  display: flex;
+  align-items: center; /* center vertikal */
+  justify-content: center; /* center horizontal */
+
+  font-size: 2.5rem;
+  font-weight: 200;
+  margin: 0;
 }
 
 /* state */
-.opt-selected {
-  border-color: #999;
-}
+/* .opt-selected {
+  border: 6px solid #999;
+} */
 .opt-correct {
-  border-color: green;
+  border: 6px solid green;
 }
 .opt-wrong {
-  border-color: red;
+  border: 6px solid red;
 }
 
 /* icon slot selalu ambil tempat, tapi hide dulu */
 .iconSlot {
-  width: 28px;
-  height: 28px;
+  width: 70px;
+  height: 70px;
   display: flex;
   align-items: center;
   justify-content: center;
-
+  background-color: rgb(255, 0, 0);
   visibility: hidden; /* tempat tetap ada */
+
 }
 .iconSlot.show {
   visibility: visible;
@@ -286,6 +406,7 @@ watch([player, no], () => {
 
 .iconText {
   font-weight: 700;
+  font-size: 3rem;
 }
 
 .modalOverlay {
@@ -296,7 +417,7 @@ watch([player, no], () => {
   align-items: center;
   justify-content: center;
 
-  background: rgba(0, 0, 0, 0.5); /* ✅ hitam 50% */
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .modalBox {

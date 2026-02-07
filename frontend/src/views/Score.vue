@@ -67,7 +67,7 @@ async function loadScore() {
 }
 
 function handleNext() {
-  if (player.value === "male") router.push("/switching");
+  if (player.value === "male") router.push("/female/welcome");
   else router.push("/end");
 }
 
