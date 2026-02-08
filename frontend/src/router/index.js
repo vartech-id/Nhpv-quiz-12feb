@@ -8,6 +8,7 @@ import Question from "../views/Question.vue";
 import Score from "../views/Score.vue";
 import Switching from "../views/Switching.vue";
 import EndPage from "../views/EndPage.vue";
+import Export from "../views/Export.vue";
 
 export default createRouter({
   history: createWebHistory(),
@@ -23,5 +24,8 @@ export default createRouter({
 
     { path: "/switching", name: "Switching", component: Switching },
     { path: "/end", name: "EndPage", component: EndPage },
+    
+    { path: "/export", name: "Export", component: Export },
+    
   ],
 });

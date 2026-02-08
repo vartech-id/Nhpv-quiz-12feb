@@ -1,10 +1,14 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
 const maleName = ref("");
 const femaleName = ref("");
+
+const forceUppercase = (event) => {
+  return event.target.value.toUpperCase();
+};
 
 const handleSubmit = async () => {
   try {
@@ -39,10 +43,6 @@ const handleSubmit = async () => {
   }
 };
 
-onMounted(() => {
-  maleName.value = "Male test dev";
-  femaleName.value = "Female test dev";
-});
 </script>
 
 <template>
@@ -54,9 +54,9 @@ onMounted(() => {
     <div class="form-wrapper">
       <form class="register form" @submit.prevent>
           <label for="maleName">Nama Pasangan Pria:</label>
-          <input id="maleName" v-model="maleName" type="text" required />
+          <input id="maleName" v-model="maleName" @input="maleName = forceUppercase($event)" type="text" required />
           <label for="femaleName">Nama Pasangan Wanita:</label>
-          <input id="femaleName" v-model="femaleName" type="text" required />
+          <input id="femaleName" v-model="femaleName" @input="femaleName = forceUppercase($event)" type="text" required />
       </form>
     </div>
     <div class="action-button">
