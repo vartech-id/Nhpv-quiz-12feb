@@ -29,10 +29,25 @@ from fastapi.responses import StreamingResponse
 from openpyxl import Workbook
 from openpyxl.utils import get_column_letter
 import io
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 
 
 app = FastAPI(title="Couple Quiz Backend")
+
+WIB_TZ = timezone(timedelta(hours=7), name="WIB")
+
+
+def to_wib(dt: datetime | None) -> datetime | None:
+    if dt is None:
+        return None
+    # Data di DB disimpan sebagai naive UTC, jadi treat as UTC lalu convert ke WIB.
+    base = dt if dt.tzinfo is not None else dt.replace(tzinfo=timezone.utc)
+    return base.astimezone(WIB_TZ).replace(tzinfo=None)
+
+
+def format_wib(dt: datetime | None) -> str:
+    wib = to_wib(dt)
+    return wib.strftime("%Y-%m-%d %H:%M:%S") if wib else ""
 
 app.add_middleware(
     CORSMiddleware,
@@ -145,7 +160,7 @@ def submit_answers(
     # female final
     cs.female_score = score
     cs.status = "done"
-    cs.completed_at = datetime.utcnow()  # timestamp selesai
+    cs.completed_at = datetime.utcnow()  # timestamp selesai (disimpan UTC)
     db.add(cs)
     db.commit()
     db.refresh(cs)
@@ -199,8 +214,8 @@ def get_session_status(couple_session_id: int, db: Session = Depends(get_db)):
         "female_score": cs.female_score,
         "male_result_image_url": get_result_image_url(cs.male_score),
         "female_result_image_url": get_result_image_url(cs.female_score),
-        "created_at": cs.created_at,
-        "completed_at": cs.completed_at,
+        "created_at": to_wib(cs.created_at),
+        "completed_at": to_wib(cs.completed_at),
     }
 
 
@@ -239,8 +254,8 @@ def export_couple_results_xlsx(db: Session = Depends(get_db)):
             r.male_score,
             r.female_score,
             r.total_players,
-            r.created_at.strftime("%Y-%m-%d %H:%M:%S") if r.created_at else "",
-            r.completed_at.strftime("%Y-%m-%d %H:%M:%S") if r.completed_at else "",
+            format_wib(r.created_at),
+            format_wib(r.completed_at),
         ])
 
     # (Optional) auto width sederhana biar enak dibaca
@@ -257,7 +272,7 @@ def export_couple_results_xlsx(db: Session = Depends(get_db)):
     wb.save(buf)
     buf.seek(0)
 
-    filename = f"couple_results_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}.xlsx"
+    filename = f"couple_results_{datetime.now(WIB_TZ).strftime('%Y%m%d_%H%M%S')}.xlsx"
 
     return StreamingResponse(
         buf,
