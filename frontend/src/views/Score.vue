@@ -17,12 +17,16 @@ const femaleName = localStorage.getItem("femaleName") || "Female";
 const score = ref(null); // number 0..5
 const resultImageUrl = ref("");
 
-const playerLabel = computed(() => (player.value === "male" ? maleName : femaleName));
+const playerLabel = computed(() =>
+  player.value === "male" ? maleName : femaleName,
+);
 
 const title = computed(() => {
   if (score.value === null) return "";
-  if (score.value === 5) return "WOW, Kamu sudah Peka banget sama Bahasa Pasanganmu!";
-  if (score.value >= 3) return "Hebat!, Kamu Sudah Cukup Paham Bahasa Pasanganmu";
+  if (score.value === 5)
+    return "WOW, Kamu sudah Peka banget sama Bahasa Pasanganmu!";
+  if (score.value >= 3)
+    return "Hebat!, Kamu Sudah Cukup Paham Bahasa Pasanganmu";
   return "Kamu masih belum Peka sama pasanganmu nih...";
 });
 
@@ -49,7 +53,9 @@ async function loadScore() {
   }
 
   try {
-    const res = await fetch(`http://localhost:8000/couple-sessions/${sessionId}`);
+    const res = await fetch(
+      `http://localhost:8000/couple-sessions/${sessionId}`,
+    );
     if (!res.ok) throw new Error(await res.text());
     const data = await res.json();
 
@@ -99,25 +105,35 @@ onMounted(() => {
       <p>{{ subtitle }}</p>
 
       <p>{{ scoreText }}</p> -->
-      <img class="result-image" :src="resultImageUrl" alt="result-image">
-
-      <button class="next-btn" @click="handleNext">
-        {{ player === "male" ? "NEXT" : "NEXT" }}
-      </button>
+      <img class="result-image" :src="resultImageUrl" alt="result-image" />
+      <div class="action-button">
+        <button class="btn" @click="handleNext">
+          {{ player === "male" ? "NEXT" : "NEXT" }}
+        </button>
+      </div>
     </div>
   </div>
 </template>
 <style>
+
 .result {
   width: 100vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 100vh;
+  width: 100vw;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-image: url(..//assets/bg-quiz.png);
   gap: 2rem;
 }
 
-.result-image{ 
+.result-image {
   max-width: 80%;
 }
 </style>

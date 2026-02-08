@@ -24,22 +24,21 @@ const route = useRoute();
 .btn {
   color: #dddc25;
   background-color: white;
-  width: 30%;
+  width: 25%;
   font-size: 2.5rem;
   border: none;
   border-radius: 1.6rem;
   padding: 0.5rem;
   background-image: linear-gradient(to top, #244f53, #3b878f);
+  font-family: var(--font-btn);
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
 }
 
-.next-btn {
-  color: #dddc25;
-  background-color: white;
-  width: 25%;
-  font-size: 2.8rem;
-  border: none;
-  border-radius: 1.6rem;
-  padding: 0.5rem;
-  background-image: linear-gradient(to top, #244f53, #3b878f);
+.action-button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
+
 </style>

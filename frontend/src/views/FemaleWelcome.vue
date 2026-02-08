@@ -15,6 +15,8 @@ const handleNext = () => {
       <h1>pasangan wanita</h1>
       <h1>sekarang giliranmu!</h1>
     </div>
-    <button class="next-btn" @click="handleNext">NEXT</button>
+    <div class="action-button">
+      <button class="btn" @click="handleNext">NEXT</button>
+    </div>
   </div>
 </template>

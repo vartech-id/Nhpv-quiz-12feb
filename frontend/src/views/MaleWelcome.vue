@@ -15,18 +15,22 @@ const handleNext = () => {
       <h1>saatnya pasangan laki-</h1>
       <h1>laki dulu yang menjawab</h1>
     </div>
-    <button class="next-btn" @click="handleNext">NEXT</button>
+    <div class="action-button">
+      <button class="btn" @click="handleNext">NEXT</button>
+    </div>
   </div>
 </template>
 <style>
 .greeting {
+  height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: aqua;
-  width: 100%;
-  gap: 3rem;
+  flex-direction: column;
+  background-image: url(..//assets/bg-quiz.png);
+  gap: 3.5rem;
 }
 
 .subgreeting {
@@ -34,9 +38,9 @@ const handleNext = () => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: aqua;
-  font-size: 1.7rem;
-  gap: 1rem;
+  font-family: var(--font-welcome);
+  color: var(--color-text);
+  font-size: 2.4rem;
   width: 100%;
 }
 </style>

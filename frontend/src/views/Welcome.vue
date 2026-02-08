@@ -14,7 +14,9 @@ const handleNext = () => {
       <h1>dengan kata-kata</h1>
       <h1>pasanganmu ?</h1>
     </div>
-    <button @click="handleNext" class="welcome btn">MULAI!</button>
+    <div class="action-button">
+      <button @click="handleNext" class="welcome btn">MULAI!</button>
+    </div>
   </div>
 </template>
 <style>
@@ -26,12 +28,19 @@ const handleNext = () => {
   background-color: aquamarine;
   gap: 3rem;
   width: 100%;
+  background-image: url(../assets/bg-quiz.png);
+  height: 100vh;
 }
 .title {
-  font-size: 2.2rem;
   text-align: center;
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
+}
+
+.title > h1 {
+  font-size: 5rem;
+  font-family: var(--font-welcome);
+  color: var(--color-text)
 }
 </style>

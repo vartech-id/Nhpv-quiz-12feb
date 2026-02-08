@@ -244,8 +244,9 @@ watch([player, no], () => {
           </div>
         </div>
       </div>
-
-      <button class="next-btn" @click="handleNext">NEXT</button>
+      <div class="action-button">
+        <button class="btn" @click="handleNext">NEXT</button>
+      </div>
 
       <!-- Confirm modal -->
       <div v-if="showConfirm" class="modal-backdrop">
@@ -258,19 +259,21 @@ watch([player, no], () => {
         </div>
       </div>
     </div>
-
     <div v-else>Loading...</div>
   </div>
 </template>
 
 <style>
 #quiz-page {
+  height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  background-color: rgb(125, 125, 255);
+  flex-direction: column;
+  background-image: url(..//assets/bg-quiz.png);
+  gap: 3.5rem;
 }
 
 .quiz-dom {
@@ -279,13 +282,15 @@ watch([player, no], () => {
   justify-content: center;
   align-items: center;
   width: 100%;
-  background-color: rgb(220, 255, 125);
+  /* background-color: rgb(220, 255, 125); */
   gap: 1.5rem;
 }
 
 .questions {
   font-size: 3.4rem;
   text-align: center;
+  font-family: var(--font-btn);
+  color: var(--color-text);
 }
 
 .option-wrapper {
@@ -293,10 +298,11 @@ watch([player, no], () => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: aqua;
+  /* background-color: aqua; */
   width: 100%;
-  background-color: 10px solid blue;
+  /* background-color: 10px solid blue; */
   gap: 2rem;
+  padding-bottom: 1rem;
 }
 
 .selections {
@@ -317,20 +323,21 @@ watch([player, no], () => {
   padding-left: 0;
   border: none;
   align-items: stretch;
-  color: #124F5A;
+  color: #124f5a;
 }
 
-.A{
-    background-image: linear-gradient(to top, #66CBE4, #A5DAEC);
+.A {
+  background-image: linear-gradient(to top, #66cbe4, #a5daec);
 }
 
-.B{
-    background-image: linear-gradient(to top, #E3C726, #fff677);
+.B {
+  background-image: linear-gradient(to top, #e3c726, #fff677);
 }
 
 span {
   text-align: left;
   /* border: 2px solid yellow; */
+  font-family: var(--font-btn);
 }
 
 .row span {
@@ -339,12 +346,8 @@ span {
   white-space: normal;
   min-width: 0;
   flex: 1;
-
-  /* center vertikal */
   display: flex;
-  align-items: center; /* ✅ bikin teks di tengah vertikal */
-
-  /* biar ada jarak kanan */
+  align-items: center;
   padding-right: 16px;
 }
 
@@ -361,13 +364,14 @@ span {
   min-width: 120px; /* optional: biar lebar badge konsisten */
   min-height: 110px; /* sama seperti .row */
   border-radius: 40px 40px 40px 40px;
-  color:  #124F5A;
+  color: #124f5a;
   display: flex;
   align-items: center; /* center vertikal */
   justify-content: center; /* center horizontal */
   font-size: 2.5rem;
   font-weight: 200;
   margin: -1px;
+  font-family: var(--font-btn);
 }
 
 /* state */
@@ -415,7 +419,7 @@ span {
 }
 
 .modal {
-  background: #F2E8D6;
+  background: #f2e8d6;
   border-radius: 32px;
   padding: clamp(2rem, 5vw, 3rem);
   text-align: center;
@@ -433,9 +437,8 @@ span {
   font-size: 84px;
   margin: 0 0 5rem;
   font-weight: 700;
-  font-family: "Poppins", sans-serif;
-  font-style: normal;
-  color: #124F5A;
+  font-family: var(--font-btn);
+  color: #124f5a;
 }
 
 .modal-actions {
@@ -454,8 +457,9 @@ span {
   transition:
     transform 150ms ease,
     box-shadow 150ms ease;
-      color: #dddc25;
   background-image: linear-gradient(to top, #244f53, #3b878f);
   border: none;
+  font-family: var(--font-btn);
+  color: var(--color-btn);
 }
 </style>

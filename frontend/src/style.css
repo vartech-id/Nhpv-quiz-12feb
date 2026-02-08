@@ -1,7 +1,17 @@
+@import "./fonts.css";
+
+:root {
+  --font-welcome: "JT Selinadaniel Display";
+  --font-question : "Neue Montreal";
+  --font-btn : "Neue Montreal Bold";
+  --font-register : "Canela Deck";
+  --color-text : #05525A;
+  --color-btn : #D2D727;
+}
+
 html{
   margin: 0;
   padding: 0;
-  height: 100%;
   font-size: 20px;
 }
 
@@ -18,7 +28,6 @@ h1, p, span {
 #app {
   box-sizing: border-box;
   background-color: rgb(212, 212, 212);
-  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
