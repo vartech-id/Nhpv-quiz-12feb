@@ -10,17 +10,16 @@ const handleNext = () => {
 
 <template>
   <div class="welcome-male greeting">
-    <div class="male-wording">
-      <h1>LADIES, SANTAI DULU</h1>
-      <h1>SAATNYA PASANGAN LAKI-</h1>
-      <h1>LAKI DULU YANG MENJAWAB</h1>
+    <div class="subgreeting">
+      <h1>Ladies, santai dulu</h1>
+      <h1>saatnya pasangan laki-</h1>
+      <h1>laki dulu yang menjawab</h1>
     </div>
-
     <button class="next-btn" @click="handleNext">NEXT</button>
   </div>
 </template>
 <style>
-.welcome-male {
+.greeting {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -30,7 +29,7 @@ const handleNext = () => {
   gap: 3rem;
 }
 
-.male-wording {
+.subgreeting {
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -46,6 +46,16 @@ app.add_middleware(
 Base.metadata.create_all(bind=engine)
 
 
+def get_result_image_url(score: int | None) -> str | None:
+    if score is None:
+        return None
+    if score == 5:
+        return "/src/assets/Result1.png"
+    if score >= 3:
+        return "/src/assets/Result2.png"
+    return "/src/assets/Result3.png"
+
+
 @app.post("/couple-sessions", response_model=CoupleSessionCreated)
 def create_session(payload: CoupleSessionCreate, db: Session = Depends(get_db)):
     # print("male_name:", payload.male_name)
@@ -187,6 +197,8 @@ def get_session_status(couple_session_id: int, db: Session = Depends(get_db)):
         "status": cs.status,
         "male_score": cs.male_score,
         "female_score": cs.female_score,
+        "male_result_image_url": get_result_image_url(cs.male_score),
+        "female_result_image_url": get_result_image_url(cs.female_score),
         "created_at": cs.created_at,
         "completed_at": cs.completed_at,
     }

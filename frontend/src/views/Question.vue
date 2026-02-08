@@ -212,7 +212,7 @@ watch([player, no], () => {
         <!-- Opsi A -->
         <div class="option-a selections">
           <button
-            class="row"
+            class="A row"
             :class="buttonClass('A')"
             @click="requestSelect('A')"
             :disabled="isLocked"
@@ -229,7 +229,7 @@ watch([player, no], () => {
 
         <div class="option-b selections">
           <button
-            class="row"
+            class="B row"
             :class="buttonClass('B')"
             @click="requestSelect('B')"
             :disabled="isLocked"
@@ -243,32 +243,18 @@ watch([player, no], () => {
             <span class="iconText">{{ iconText() }}</span>
           </div>
         </div>
-
-        <!-- Opsi B
-        <div class="row">
-          <h1 class="tag-option">B.</h1>
-          <button
-            :class="buttonClass('B')"
-            @click="requestSelect('B')"
-            :disabled="isLocked"
-          >
-            <span>{{ currentQuestion.option_b }}</span>
-          </button>
-
-          <div class="iconSlot" :class="{ show: iconVisibleFor('B') }">
-            <span class="iconText">{{ iconText() }}</span>
-          </div>
-        </div> -->
       </div>
 
-      <button class="next-btn" @click="handleNext">Next</button>
+      <button class="next-btn" @click="handleNext">NEXT</button>
 
       <!-- Confirm modal -->
-      <div v-if="showConfirm" class="modalOverlay">
-        <div class="modalBox">
-          <p>Anda yakin pilih {{ pendingChoice }}?</p>
-          <button @click="confirmYes">Yes</button>
-          <button @click="confirmNo">No</button>
+      <div v-if="showConfirm" class="modal-backdrop">
+        <div class="modal">
+          <h2>Anda yakin pilih {{ pendingChoice }}?</h2>
+          <div class="modal-actions">
+            <button class="modal-btn" @click="confirmYes">YA</button>
+            <button class="modal-btn" @click="confirmNo">TIDAK</button>
+          </div>
         </div>
       </div>
     </div>
@@ -315,29 +301,36 @@ watch([player, no], () => {
 
 .selections {
   display: flex;
-  background-color: rgb(255, 255, 255);
+  /* background-color: rgb(255, 255, 255); */
   justify-content: center;
   align-items: center;
   width: 90%;
-  margin-left: 2rem;
+  margin-left: 3rem;
 }
 
 .row {
   display: flex;
   width: 100%;
   gap: 1rem;
-  background-color: rgb(139, 139, 139);
   min-height: 110px;
   border-radius: 40px;
   padding-left: 0;
   border: none;
-
   align-items: stretch;
+  color: #124F5A;
+}
+
+.A{
+    background-image: linear-gradient(to top, #66CBE4, #A5DAEC);
+}
+
+.B{
+    background-image: linear-gradient(to top, #E3C726, #fff677);
 }
 
 span {
   text-align: left;
-  border: 2px solid yellow;
+  /* border: 2px solid yellow; */
 }
 
 .row span {
@@ -349,8 +342,8 @@ span {
 
   /* center vertikal */
   display: flex;
-  align-items: center;   /* ✅ bikin teks di tengah vertikal */
-  
+  align-items: center; /* ✅ bikin teks di tengah vertikal */
+
   /* biar ada jarak kanan */
   padding-right: 16px;
 }
@@ -368,20 +361,20 @@ span {
   min-width: 120px; /* optional: biar lebar badge konsisten */
   min-height: 110px; /* sama seperti .row */
   border-radius: 40px 40px 40px 40px;
-
+  color:  #124F5A;
   display: flex;
   align-items: center; /* center vertikal */
   justify-content: center; /* center horizontal */
-
   font-size: 2.5rem;
   font-weight: 200;
-  margin: 0;
+  margin: -1px;
 }
 
 /* state */
 /* .opt-selected {
   border: 6px solid #999;
 } */
+
 .opt-correct {
   border: 6px solid green;
 }
@@ -396,9 +389,8 @@ span {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgb(255, 0, 0);
+  /* background-color: rgb(255, 0, 0); */
   visibility: hidden; /* tempat tetap ada */
-
 }
 .iconSlot.show {
   visibility: visible;
@@ -409,21 +401,61 @@ span {
   font-size: 3rem;
 }
 
-.modalOverlay {
+/* MODAL ACTIONS */
+.modal-backdrop {
   position: fixed;
   inset: 0;
-
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
-
-  background: rgba(0, 0, 0, 0.5);
+  padding: 1.5rem;
+  z-index: 20;
+  backdrop-filter: blur(4px);
 }
 
-.modalBox {
-  border: 1px solid #ccc;
-  padding: 16px;
-  background: white;
-  color: black;
+.modal {
+  background: #F2E8D6;
+  border-radius: 32px;
+  padding: clamp(2rem, 5vw, 3rem);
+  text-align: center;
+  color: #fff;
+  min-width: min(rem, 90vw);
+  min-height: min(30rem, 90vw);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal > h2 {
+  font-size: 84px;
+  margin: 0 0 5rem;
+  font-weight: 700;
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
+  color: #124F5A;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.modal-btn {
+  min-width: 20rem;
+  padding: 1rem 2.5rem;
+  font-size: 3.5rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease;
+      color: #dddc25;
+  background-image: linear-gradient(to top, #244f53, #3b878f);
+  border: none;
 }
 </style>

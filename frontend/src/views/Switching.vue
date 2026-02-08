@@ -14,6 +14,6 @@ const handleNext = () => {
     <p>SAATNYA MEMBALAS</p>
     <p>PASANGAN WANITA</p>
     <p>SEKARANG GILIRANMU!</p>
-    <button @click="handleNext">Next</button>
+    <button @click="handleNext">NEXT</button>
   </div>
 </template>

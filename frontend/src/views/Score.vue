@@ -15,6 +15,7 @@ const maleName = localStorage.getItem("maleName") || "Male";
 const femaleName = localStorage.getItem("femaleName") || "Female";
 
 const score = ref(null); // number 0..5
+const resultImageUrl = ref("");
 
 const playerLabel = computed(() => (player.value === "male" ? maleName : femaleName));
 
@@ -52,9 +53,13 @@ async function loadScore() {
     if (!res.ok) throw new Error(await res.text());
     const data = await res.json();
 
-    if (player.value === "male") score.value = data.male_score;
-    else if (player.value === "female") score.value = data.female_score;
-    else throw new Error("Invalid player param");
+    if (player.value === "male") {
+      score.value = data.male_score;
+      resultImageUrl.value = data.male_result_image_url || "";
+    } else if (player.value === "female") {
+      score.value = data.female_score;
+      resultImageUrl.value = data.female_result_image_url || "";
+    } else throw new Error("Invalid player param");
 
     if (score.value === null || score.value === undefined) {
       throw new Error("Score belum tersedia. Pastikan sudah submit jawaban.");
@@ -68,7 +73,7 @@ async function loadScore() {
 
 function handleNext() {
   if (player.value === "male") router.push("/female/welcome");
-  else router.push("/end");
+  else router.push("/");
 }
 
 onMounted(() => {
@@ -77,8 +82,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
-    <h1>RESULT</h1>
+  <div class="result-wapper">
+    <!-- <h1>RESULT</h1> -->
 
     <div v-if="loading">Loading...</div>
 
@@ -87,17 +92,32 @@ onMounted(() => {
       <button @click="router.push('/register')">Back to Register</button>
     </div>
 
-    <div v-else>
-      <!-- <p>Player: {{ playerLabel }}</p> -->
+    <div class="result" v-else>
+      <!-- <p>Player: {{ playerLabel }}</p>
 
       <h2>{{ title }}</h2>
       <p>{{ subtitle }}</p>
 
-      <p>{{ scoreText }}</p>
+      <p>{{ scoreText }}</p> -->
+      <img class="result-image" :src="resultImageUrl" alt="result-image">
 
-      <button @click="handleNext">
-        {{ player === "male" ? "OK (Giliran Cewek)" : "Selesai" }}
+      <button class="next-btn" @click="handleNext">
+        {{ player === "male" ? "NEXT" : "NEXT" }}
       </button>
     </div>
   </div>
 </template>
+<style>
+.result {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+.result-image{ 
+  max-width: 80%;
+}
+</style>
