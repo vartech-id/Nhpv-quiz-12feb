@@ -39,7 +39,7 @@ def _seed_questions_if_empty(db: Session) -> None:
 
     female_seed = [
         ('"Maaf ya" Artinya...', "Dia Gak Bakal ngelakuin kesalahan yang sama", "Dia Bakal ngelakuin kesalahan yang sama", "B"),
-        ('"Iyaaaaaa" Artinya...', "Dia sedang excited banget sama kamu", "Dia gak excited sama kamu", "B"),
+        ('"Iyaaaaaa" Artinya...', "Dia sedang excited banget sama kamu", "Dia gak excited sama kamu", "A"),
         ('"Aku Kangen" Artinya...', "Dia pura-pura aja", "Dia beneran kangen dan ingin dimanja sama kamu", "B"),
         ('"Tidur Yuk" Artinya...', "Dia sebenernya bosen ngobrol sama kamu dan ingin ngelakuin aktivitas lain sama teman / sendiri dan gak mau diganggu kamu", "Dia ngajak tidur beneran", "A"),
         ('"Gapapa kok aman aja" Artinya...', "Dia lagi capek / stress", "Dia beneran gak kenapa-kenapa", "A"),
