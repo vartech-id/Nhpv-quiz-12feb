@@ -30,7 +30,7 @@ def _seed_questions_if_empty(db: Session) -> None:
     # Format: (question_text, option_a, option_b, correct_answer)
     male_seed = [
         ('"Terserah" Artinya...', "Dia Beneran Gatau Maunya apa?", "Kamu Harus Inisiatif", "B"),
-        ('"Have fun ya." Artinya...', "Dia Beneran have fun sama teman kamu", "Kamu gak boleh have fun dengan temenmu dan harus have fun dengan dia", "B"),
+        ('"Have fun ya." Artinya...', "Dia beneran ngebolehin kamu have fun sama temen kamu", "Kamu gak boleh have fun dengan temenmu dan harus have fun dengan dia", "B"),
         ('"Yaudah" Artinya...', "Dia merasa kecewa karena masalahnya tidak selesai dengan baik", "Dia beneran merasa masalahnya selesai", "A"),
         ('"Gpp" Artinya...', "Dia Beneran Gak kenapa-kenapa", "Dia sedang sedih / marah sama kamu", "B"),
         ('"Laper nih" Artinya...', "Kamu harus pesen makanan buat dia", "Dia mengeluh lapar aja", "A"),
