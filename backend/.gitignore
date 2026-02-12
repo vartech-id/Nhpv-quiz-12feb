@@ -8,3 +8,4 @@ wheels/
 
 # Virtual environments
 .venv
+quiz_booth_a.db
